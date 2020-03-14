@@ -87,12 +87,12 @@ public class Renderer implements Listener {
 				
 				if (clipTool.hasClip()) {
 					for (Location point : clipTool.getClip().getBorderBlocks()) {
-						player.sendBlockChange(point, Constants.CLIPBOARD_BORDER.createBlockData());
+						player.sendBlockChange(point, Constants.CLIPBOARD_BORDER, (byte) 0);
 					}
 				}
 				
 				for (BlockVec vertex : clipTool.getVertices())
-					player.sendBlockChange(vertex.toLocation(), Constants.CLIPBOARD_VERTEX.createBlockData());
+					player.sendBlockChange(vertex.toLocation(), Constants.CLIPBOARD_VERTEX, (byte) 0);
 			}
 		}.runTaskLater(plugin, 2);
 	}
@@ -104,7 +104,7 @@ public class Renderer implements Listener {
 		Player player = clipTool.getPlayer();
 		
 		for (BlockVec vertex : clipTool.getVertices())
-			player.sendBlockChange(vertex.toLocation(), vertex.getBlock().getBlockData());
+			player.sendBlockChange(vertex.toLocation(), vertex.getBlock().getType(), vertex.getBlock().getData());
 		
 		if (clipTool.hasClip()) {
 			for (Location point : clipTool.getClip().getBorderBlocks()) {
@@ -135,13 +135,13 @@ public class Renderer implements Listener {
 			public void run() {
 				
 				for (Location point : maze.getClip().getBorderBlocks())
-					player.sendBlockChange(point, Constants.MAZE_BORDER.createBlockData());
+					player.sendBlockChange(point, Constants.MAZE_BORDER, (byte) 0);
 				
 				for (Vec2 exit : maze.getSecondaryExits())
-					player.sendBlockChange(maze.getClip().getBlockLoc(exit), Constants.MAZE_EXIT.createBlockData());
+					player.sendBlockChange(maze.getClip().getBlockLoc(exit), Constants.MAZE_EXIT, (byte) 0);
 				
 				if (maze.hasExits())
-					player.sendBlockChange(maze.getClip().getBlockLoc(maze.getEntrance()), Constants.MAZE_MAIN_EXIT.createBlockData());
+					player.sendBlockChange(maze.getClip().getBlockLoc(maze.getEntrance()), Constants.MAZE_MAIN_EXIT, (byte) 0);
 				
 			}
 		}.runTaskLater(plugin, 2);
@@ -168,7 +168,7 @@ public class Renderer implements Listener {
 		for (BlockVec vertex : hiddenClipboard.getVertices()) {
 			
 			if (maze.getClip().isBorderBlock(vertex.getBlock()))
-				player.sendBlockChange(vertex.toLocation(), Constants.MAZE_BORDER.createBlockData());
+				player.sendBlockChange(vertex.toLocation(), Constants.MAZE_BORDER, (byte) 0);
 		}
 		
 		if (!hiddenClipboard.hasClip())
@@ -177,7 +177,7 @@ public class Renderer implements Listener {
 		for (Location border : hiddenClipboard.getClip().getBorderBlocks()) {
 			
 			if (maze.getClip().isBorderBlock(border.getBlock()))
-				maze.getPlayer().sendBlockChange(border, Constants.MAZE_BORDER.createBlockData());
+				maze.getPlayer().sendBlockChange(border, Constants.MAZE_BORDER, (byte) 0);
 		}
 	}
 	
@@ -215,21 +215,21 @@ public class Renderer implements Listener {
 		
 		for (Vec2 exit : action.getRemovedExits()) {
 			
-			player.sendBlockChange(clip.getBlockLoc(exit), Constants.MAZE_BORDER.createBlockData());
+			player.sendBlockChange(clip.getBlockLoc(exit), Constants.MAZE_BORDER, (byte) 0);
 			
 			List<Vec2> mazeExits = maze.getExits();
 			
 			if (exit.equals(maze.getEntrance()) && mazeExits.size() > 1)
-				player.sendBlockChange(clip.getBlockLoc(mazeExits.get(mazeExits.size() - 2)), Constants.MAZE_MAIN_EXIT.createBlockData());
+				player.sendBlockChange(clip.getBlockLoc(mazeExits.get(mazeExits.size() - 2)), Constants.MAZE_MAIN_EXIT, (byte) 0);
 		}
 		
 		for (Vec2 point : action.getAddedBorder()) {
-			player.sendBlockChange(action.getBorder(point), Constants.MAZE_BORDER.createBlockData());
+			player.sendBlockChange(action.getBorder(point), Constants.MAZE_BORDER, (byte) 0);
 		}
 		
 		for (Vec2 point : action.getRemovedBorder()) {
 			Location block = action.getBorder(point);
-			player.sendBlockChange(block, block.getBlock().getType().createBlockData());
+			player.sendBlockChange(block, block.getBlock().getType(), (byte) 0);
 		}
 	}
 	
@@ -239,7 +239,7 @@ public class Renderer implements Listener {
 			
 			@Override
 			public void run() {
-				player.sendBlockChange(point, mat.createBlockData());
+				player.sendBlockChange(point, mat, (byte) 0);
 			}
 		}.runTaskLater(plugin, 2);
 	}

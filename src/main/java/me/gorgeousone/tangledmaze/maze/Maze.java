@@ -9,11 +9,11 @@ import me.gorgeousone.tangledmaze.utils.BlockUtils;
 import me.gorgeousone.tangledmaze.utils.Direction;
 import me.gorgeousone.tangledmaze.utils.MathHelper;
 import me.gorgeousone.tangledmaze.utils.Vec2;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.material.MaterialData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class Maze extends PlayerHolder {
 		
 		dimensions = new HashMap<>();
 		blockComposition = new BlockComposition();
-		blockComposition.addBlock(Bukkit.createBlockData(Material.STONE), 1);
+		blockComposition.addBlock(new MaterialData(Material.STONE), 1);
 		
 		for (MazeDimension dimension : MazeDimension.values())
 			dimensions.put(dimension, dimension.getDefault());

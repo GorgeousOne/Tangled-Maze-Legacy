@@ -7,7 +7,7 @@ import me.gorgeousone.cmdframework.command.ArgCommand;
 import me.gorgeousone.tangledmaze.data.Messages;
 import me.gorgeousone.tangledmaze.generation.BlockComposition;
 import me.gorgeousone.tangledmaze.generation.MazePart;
-import me.gorgeousone.tangledmaze.generation.blockdatapickers.RandomBlockDataPicker;
+import me.gorgeousone.tangledmaze.generation.blockdatapickers.RandomMaterialDataPicker;
 import me.gorgeousone.tangledmaze.generation.blocklocators.AbstractBlockLocator;
 import me.gorgeousone.tangledmaze.generation.blocklocators.FloorBlockLocator;
 import me.gorgeousone.tangledmaze.generation.blocklocators.HollowWallLocator;
@@ -19,7 +19,7 @@ import me.gorgeousone.tangledmaze.handlers.ToolHandler;
 import me.gorgeousone.tangledmaze.maze.Maze;
 import me.gorgeousone.tangledmaze.messages.PlaceHolder;
 import me.gorgeousone.tangledmaze.messages.TextException;
-import me.gorgeousone.tangledmaze.utils.BlockDataReader;
+import me.gorgeousone.tangledmaze.utils.MaterialDataReader;
 import me.gorgeousone.tangledmaze.utils.MathHelper;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -67,7 +67,7 @@ public class BuildCommand extends ArgCommand {
 		}
 		
 		MazePart mazePart = buildSettings.getKey();
-		AbstractBlockLocator blockSelector = buildSettings.getValue();
+		AbstractBlockLocator blockLocator = buildSettings.getValue();
 		
 		if (buildHandler.hasBlockBackup(maze) && buildHandler.getBlockBackup(maze).hasBackup(mazePart)) {
 			
@@ -104,8 +104,8 @@ public class BuildCommand extends ArgCommand {
 		buildHandler.buildMazePart(
 				maze,
 				mazePart,
-				blockSelector,
-				new RandomBlockDataPicker());
+				blockLocator,
+				new RandomMaterialDataPicker());
 		
 		return true;
 	}
@@ -194,11 +194,11 @@ public class BuildCommand extends ArgCommand {
 			String[] blockArgument = argument.getString().split("\\*");
 			
 			if (blockArgument.length == 1) {
-				composition.addBlock(BlockDataReader.read(blockArgument[0]), 1);
+				composition.addBlock(MaterialDataReader.read(blockArgument[0]), 1);
 				
 			} else {
 				int amount = new ArgValue(ArgType.INTEGER, blockArgument[0]).getInt();
-				composition.addBlock(BlockDataReader.read(blockArgument[1]), MathHelper.clamp(amount, 1, 1000));
+				composition.addBlock(MaterialDataReader.read(blockArgument[1]), MathHelper.clamp(amount, 1, 1000));
 			}
 		}
 		return composition;

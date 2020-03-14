@@ -1,17 +1,19 @@
 package me.gorgeousone.tangledmaze.generation;
 
+import org.bukkit.block.BlockState;
+
 import java.util.HashMap;
 import java.util.Set;
 
 public class MazePartBlockBackup {
 	
-	private HashMap<MazePart, Set<BlockDataState>> partBackupLists;
+	private HashMap<MazePart, Set<BlockState>> partBackupLists;
 	
 	public MazePartBlockBackup() {
 		partBackupLists = new HashMap<>();
 	}
 	
-	public Set<BlockDataState> getPartBackup(MazePart part) {
+	public Set<BlockState> getPartBackup(MazePart part) {
 		return partBackupLists.get(part);
 	}
 	
@@ -19,7 +21,7 @@ public class MazePartBlockBackup {
 		return partBackupLists.isEmpty();
 	}
 	
-	public void setBackup(MazePart part, Set<BlockDataState> blockBackup) {
+	public void setBackup(MazePart part, Set<BlockState> blockBackup) {
 		partBackupLists.put(part, blockBackup);
 	}
 	

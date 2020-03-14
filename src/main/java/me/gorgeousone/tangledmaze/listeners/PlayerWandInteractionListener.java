@@ -10,6 +10,7 @@ import me.gorgeousone.tangledmaze.tools.ClipTool;
 import me.gorgeousone.tangledmaze.tools.ToolType;
 import me.gorgeousone.tangledmaze.utils.WandUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -56,9 +57,15 @@ public class PlayerWandInteractionListener implements Listener {
 		Action action = event.getAction();
 		
 		if (action != Action.LEFT_CLICK_BLOCK &&
-		    action != Action.RIGHT_CLICK_BLOCK ||
-		    event.getHand() != EquipmentSlot.HAND)
+		    action != Action.RIGHT_CLICK_BLOCK)
 			return;
+		
+		try {
+			if(event.getHand() != EquipmentSlot.HAND)
+				return;
+		} catch (NoSuchMethodError ignored) {
+			//the off hand only exists for 1.12 I think?
+		}
 		
 		Player player = event.getPlayer();
 		Block clickedBlock = event.getClickedBlock();
@@ -124,7 +131,15 @@ public class PlayerWandInteractionListener implements Listener {
 		player.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "It seems like you are unworthy to use such mighty tool, it broke apart.");
 		player.damage(0);
 		
-		player.getWorld().playSound(player.getEyeLocation(), Sound.ENTITY_ITEM_BREAK, 1f, 1f);
-		player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, player.getLocation(), 1);
+		if(Constants.BUKKIT_VERSION == 8) {
+			
+			player.getWorld().playSound(player.getEyeLocation(), Sound.valueOf("ITEM_BREAK"), 1f, 1f);
+			player.getWorld().playEffect(player.getLocation().add(0, 1, 0), Effect.valueOf("EXPLOSION_HUGE"), 0);
+			
+		}else {
+			
+			player.getWorld().playSound(player.getEyeLocation(), Sound.ENTITY_ITEM_BREAK, 1f, 1f);
+			player.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, player.getLocation(), 1);
+		}
 	}
 }

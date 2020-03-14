@@ -40,6 +40,4 @@ errors:
     invalid-dimension: '''%dimension%'' is not a valid dimension.'
     invalid-maze-part: '''%mazepart%'' is not a valid maze part.'
     invalid-block-name: '''%block%'' is not a block name.'
-    invalid-block-property: '''%block%'' does not seem to have the property ''%property%''.'
-    invalid-block-property-value: '''%block%'' cannot take ''%value%'' as value for ''%property%''.'
-    missing-block-property-value: 'Please complete your added property in the pattern ''%property%=...''.'
+    invalid-number: '''%number%'' is not a valid number.'

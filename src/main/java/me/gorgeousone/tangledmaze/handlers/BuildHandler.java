@@ -1,16 +1,16 @@
 package me.gorgeousone.tangledmaze.handlers;
 
 import me.gorgeousone.tangledmaze.data.Messages;
-import me.gorgeousone.tangledmaze.generation.BlockDataState;
 import me.gorgeousone.tangledmaze.generation.BlockGenerator;
 import me.gorgeousone.tangledmaze.generation.MazePart;
 import me.gorgeousone.tangledmaze.generation.MazePartBlockBackup;
-import me.gorgeousone.tangledmaze.generation.blockdatapickers.AbstractBlockDataPicker;
+import me.gorgeousone.tangledmaze.generation.blockdatapickers.AbstractMaterialDataPicker;
 import me.gorgeousone.tangledmaze.generation.blocklocators.AbstractBlockLocator;
 import me.gorgeousone.tangledmaze.generation.terrainmap.TerrainMap;
 import me.gorgeousone.tangledmaze.generation.terrainmap.TerrainMapFactory;
 import me.gorgeousone.tangledmaze.maze.Maze;
 import me.gorgeousone.tangledmaze.messages.PlaceHolder;
+import org.bukkit.block.BlockState;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -57,7 +57,7 @@ public class BuildHandler {
 			Maze maze,
 			MazePart mazePart,
 			AbstractBlockLocator blockSelector,
-			AbstractBlockDataPicker blockDataPicker) {
+			AbstractMaterialDataPicker materialDataPicker) {
 		
 		if (maze.isConstructed() != mazePart.isMazeBuiltBefore())
 			return;
@@ -73,14 +73,14 @@ public class BuildHandler {
 			TerrainMapFactory.populateMap(terrainMap);
 		}
 		
-		Set<BlockDataState> mazePartBlockLocs = blockSelector.locateBlocks(terrainMap);
-		Set<BlockDataState> blockBackup = deepCloneBlockSet(mazePartBlockLocs);
+		Set<BlockState> mazePartBlockLocs = blockSelector.locateBlocks(terrainMap);
+		Set<BlockState> blockBackup = deepCloneBlockStateSet(mazePartBlockLocs);
 		
 		BlockGenerator.updateBlocks(
 				plugin,
 				mazePartBlockLocs,
 				maze.getBlockComposition(),
-				blockDataPicker,
+				materialDataPicker,
 				terrainMap,
 				callback -> {
 					
@@ -137,12 +137,12 @@ public class BuildHandler {
 		}.runTaskLater(plugin, 2);
 	}
 	
-	private Set<BlockDataState> deepCloneBlockSet(Set<BlockDataState> blockSet) {
+	private Set<BlockState> deepCloneBlockStateSet(Set<BlockState> blockSet) {
 		
-		Set<BlockDataState> clonedBlockSet = new HashSet<>();
+		Set<BlockState> clonedBlockSet = new HashSet<>();
 		
-		for (BlockDataState block : blockSet)
-			clonedBlockSet.add(block.clone());
+		for (BlockState state : blockSet)
+			clonedBlockSet.add(state.getBlock().getState());
 		
 		return clonedBlockSet;
 	}

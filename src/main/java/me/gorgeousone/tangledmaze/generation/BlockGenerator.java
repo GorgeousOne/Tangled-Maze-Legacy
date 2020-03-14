@@ -1,9 +1,9 @@
 package me.gorgeousone.tangledmaze.generation;
 
-import me.gorgeousone.tangledmaze.generation.blockdatapickers.AbstractBlockDataPicker;
+import me.gorgeousone.tangledmaze.generation.blockdatapickers.AbstractMaterialDataPicker;
 import me.gorgeousone.tangledmaze.generation.terrainmap.TerrainMap;
 import org.bukkit.block.BlockState;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,13 +17,13 @@ public final class BlockGenerator {
 	
 	public static void updateBlocks(
 			JavaPlugin plugin,
-			Set<BlockDataState> blocksToUpdate,
+			Set<BlockState> blocksToUpdate,
 			BlockComposition blockComposition,
-			AbstractBlockDataPicker blockDataPicker,
+			AbstractMaterialDataPicker materialDataPicker,
 			TerrainMap terrainMap,
 			ActionListener callback) {
 		
-		Iterator<BlockDataState> iter = blocksToUpdate.iterator();
+		Iterator<BlockState> iter = blocksToUpdate.iterator();
 		
 		new BukkitRunnable() {
 			
@@ -34,16 +34,15 @@ public final class BlockGenerator {
 				
 				while (iter.hasNext()) {
 					
-					BlockDataState nextBlock = iter.next();
-					BlockState state = nextBlock.getBlock().getState();
-					state.setBlockData(nextBlock.getData());
+					BlockState nextBlock = iter.next();
 					
-					if (blockDataPicker != null) {
-						BlockData newBlockData = blockDataPicker.pickBlockData(nextBlock, blockComposition, terrainMap);
-						state.setBlockData(newBlockData);
+					if (materialDataPicker != null) {
+						MaterialData newMaterialData = materialDataPicker.pickMaterialData(nextBlock, blockComposition, terrainMap);
+						nextBlock.setType(newMaterialData.getItemType());
+						nextBlock.setRawData(newMaterialData.getData());
 					}
 					
-					state.update(true, false);
+					nextBlock.update(true, false);
 					iter.remove();
 					
 					if (System.currentTimeMillis() - timer >= 49)

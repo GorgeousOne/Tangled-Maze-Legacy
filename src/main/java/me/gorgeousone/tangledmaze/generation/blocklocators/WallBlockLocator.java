@@ -1,21 +1,21 @@
 package me.gorgeousone.tangledmaze.generation.blocklocators;
 
-import me.gorgeousone.tangledmaze.generation.BlockDataState;
 import me.gorgeousone.tangledmaze.generation.terrainmap.MazeAreaType;
 import me.gorgeousone.tangledmaze.generation.terrainmap.TerrainMap;
 import me.gorgeousone.tangledmaze.maze.Maze;
 import me.gorgeousone.tangledmaze.utils.BlockUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class WallBlockLocator extends AbstractBlockLocator {
 	
-	public Set<BlockDataState> locateBlocks(TerrainMap terrainMap) {
+	public Set<BlockState> locateBlocks(TerrainMap terrainMap) {
 		
-		Set<BlockDataState> relevantBlocks = new HashSet<>();
+		Set<BlockState> relevantBlocks = new HashSet<>();
 		Maze maze = terrainMap.getMaze();
 		
 		for (int x = terrainMap.getMinX(); x <= terrainMap.getMaxX(); x++) {
@@ -30,7 +30,7 @@ public class WallBlockLocator extends AbstractBlockLocator {
 					Block block = new Location(maze.getWorld(), x, floorHeight + relHeight, z).getBlock();
 					
 					if (!BlockUtils.isReallySolid(block.getType()))
-						relevantBlocks.add(new BlockDataState(block));
+						relevantBlocks.add(block.getState());
 				}
 			}
 		}

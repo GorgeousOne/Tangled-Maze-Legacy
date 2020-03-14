@@ -45,9 +45,7 @@ public class Messages {
 			ERROR_INVALID_DIMENSION,
 			ERROR_INVALID_MAZE_PART,
 			ERROR_INVALID_BLOCK_NAME,
-			ERROR_INVALID_BLOCK_PROPERTY,
-			ERROR_INVALID_BLOCK_PROPERTY_VALUE,
-			ERROR_MISSING_BLOCK_PROPERTY_VALUE;
+			ERROR_INVALID_NUMBER;
 	
 	public static void loadMessages(FileConfiguration langConfig) {
 		
@@ -102,8 +100,6 @@ public class Messages {
 		ERROR_INVALID_DIMENSION = new TextMessage(ChatColor.RED + errors.getString("invalid-dimension"), false);
 		ERROR_INVALID_MAZE_PART = new TextMessage(ChatColor.RED + errors.getString("invalid-maze-part"), false);
 		ERROR_INVALID_BLOCK_NAME = new TextMessage(ChatColor.RED + errors.getString("invalid-block-name"), false);
-		ERROR_INVALID_BLOCK_PROPERTY = new TextMessage(ChatColor.RED + errors.getString("invalid-block-property"), false);
-		ERROR_INVALID_BLOCK_PROPERTY_VALUE = new TextMessage(ChatColor.RED + errors.getString("invalid-block-property-value"), false);
-		ERROR_MISSING_BLOCK_PROPERTY_VALUE = new TextMessage(ChatColor.RED + errors.getString("missing-block-property-value"), false);
+		ERROR_INVALID_NUMBER = new TextMessage(ChatColor.RED + errors.getString("invalid-number"), false);
 	}
 }

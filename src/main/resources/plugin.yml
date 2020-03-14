@@ -1,9 +1,8 @@
-name: TangledMaze
+name: TangledMazeLegacy
 version: ${project.version}
-api-version: 1.13
 authors: [mightyone, spthiel, GenerousGuava]
-description: intuitive visual maze generator for every shape and every terrain
-website: https://www.spigotmc.org/resources/tangled-maze-maze-generator-1-13.59284/
+description: ease-to-use maze generator for every shape and every terrain
+website: https://www.spigotmc.org/resources/tangled-maze-maze-generator-1-8-1-12.69995/
 
 main: me.gorgeousone.tangledmaze.TangledMain
 

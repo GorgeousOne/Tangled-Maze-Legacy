@@ -1,6 +1,7 @@
 package me.gorgeousone.tangledmaze.data;
 
 import me.gorgeousone.tangledmaze.utils.ConfigUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class Constants {
+	
+	public static final int BUKKIT_VERSION = Integer.parseInt(Bukkit.getBukkitVersion().split("\\.")[1]);
 	
 	public static final String
 			BUILD_PERM = "tangledmaze.build",
