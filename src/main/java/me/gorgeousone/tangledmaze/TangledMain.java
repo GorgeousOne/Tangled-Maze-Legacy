@@ -111,8 +111,8 @@ public class TangledMain extends JavaPlugin {
 	
 	private void checkForUpdates() {
 		
-		int resourceId = 59284;
-		String websiteURL = "https://www.spigotmc.org/resources/tangled-maze-maze-generator-1-13.59284/";
+		int resourceId = 69995;
+		String websiteURL = "https://www.spigotmc.org/resources/tangled-maze-maze-generator-1-8-1-12.69995/";
 		
 		UpdateCheck.of(this).resourceId(resourceId).handleResponse((versionResponse, newVersion) -> {
 			
